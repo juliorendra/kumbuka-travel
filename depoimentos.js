@@ -1,9 +1,6 @@
 (() => {
   "use strict";
 
-  // ──────────────────────────────────────────────────────
-  // CONFIGURAÇÕES SUPABASE
-  // ──────────────────────────────────────────────────────
 
   const SUPABASE_URL = "https://txfncrxzionvqcfowkun.supabase.co";
   const SUPABASE_ANON_KEY =
@@ -11,14 +8,11 @@
   const TABLE = "depoimentos";
   const BUCKET = "videos-depoimentos";
 
-  // ──────────────────────────────────────────────────────
-  // CONFIGURAÇÕES GERAIS
-  // ──────────────────────────────────────────────────────
 
   const CONFIG = {
     MAX_TEXT_LENGTH: 400,
     MAX_NAME_LENGTH: 60,
-    MAX_VIDEO_SIZE_MB: 500, // Aceita até 500MB — comprime antes do upload
+    MAX_VIDEO_SIZE_MB: 500,
     ALLOWED_VIDEO_TYPES: [
       "video/mp4",
       "video/webm",
@@ -26,16 +20,12 @@
       "video/quicktime",
     ],
     NEW_BADGE_HOURS: 48,
-    // Compressão de vídeo (FFmpeg.wasm)
-    VIDEO_MAX_WIDTH: 1920, // 1080p largura máxima
-    VIDEO_MAX_HEIGHT: 1080, // 1080p altura máxima
-    VIDEO_CRF: "23", // Qualidade (18=alta, 28=baixa, 23=padrão)
-    VIDEO_PRESET: "fast", // Velocidade de compressão
+    VIDEO_MAX_WIDTH: 1920,
+    VIDEO_MAX_HEIGHT: 1080,
+    VIDEO_CRF: "23",
+    VIDEO_PRESET: "fast",
   };
 
-  // ──────────────────────────────────────────────────────
-  // DEPOIMENTOS ESTÁTICOS (sempre visíveis, não vão ao banco)
-  // ──────────────────────────────────────────────────────
 
   const STATIC = [
     {
@@ -76,9 +66,6 @@
     },
   ];
 
-  // ──────────────────────────────────────────────────────
-  // ESTADO
-  // ──────────────────────────────────────────────────────
 
   let selectedStars = 0;
   let selectedVideoFile = null;
@@ -86,9 +73,6 @@
   let adminPassword = null;
   let videoModalEl = null;
 
-  // ──────────────────────────────────────────────────────
-  // API SUPABASE
-  // ──────────────────────────────────────────────────────
 
   const headers = (extra = {}) => ({
     "Content-Type": "application/json",
@@ -176,27 +160,10 @@
     if (!res.ok) throw new Error("Erro ao excluir");
   }
 
-  // ──────────────────────────────────────────────────────
-  // COMPRESSÃO DE VÍDEO — API nativa do browser
-  // Usa MediaRecorder + Canvas para redimensionar para 1080p
-  // Funciona em localhost e produção sem restrições de segurança
-  // ──────────────────────────────────────────────────────
-
-  /**
-   * Comprime e redimensiona o vídeo para 1080p usando
-   * a API nativa do browser (sem bibliotecas externas).
-   *
-   * Processo:
-   * 1. Carrega o vídeo num elemento <video> oculto
-   * 2. Desenha cada frame num <canvas> redimensionado
-   * 3. Captura o canvas + áudio (via Web Audio API) com MediaRecorder
-   * 4. Retorna o ficheiro comprimido como File
-   */
   async function compressVideo(file) {
     showProgressPanel(true);
     updateProgress(5, "Lendo vídeo...");
 
-    // Verifica suporte ao MediaRecorder
     if (!window.MediaRecorder) {
       console.warn("MediaRecorder não suportado, enviando sem compressão.");
       showProgressPanel(false);
@@ -207,7 +174,6 @@
       const originalMB = (file.size / (1024 * 1024)).toFixed(1);
       const videoURL = URL.createObjectURL(file);
 
-      // Elemento de vídeo oculto para decodificar o ficheiro original
       const videoEl = document.createElement("video");
       videoEl.src = videoURL;
       videoEl.muted = false;
@@ -219,7 +185,6 @@
       videoEl.addEventListener("loadedmetadata", () => {
         updateProgress(15, "Analisando dimensões...");
 
-        // Calcula dimensões de saída mantendo proporção (máx 1920x1080)
         const MAX_W = CONFIG.VIDEO_MAX_WIDTH;
         const MAX_H = CONFIG.VIDEO_MAX_HEIGHT;
         let outW = videoEl.videoWidth;
@@ -231,20 +196,17 @@
           outH = Math.round(outH * ratio);
         }
 
-        // Garante dimensões pares (necessário para alguns codecs)
         outW = outW % 2 === 0 ? outW : outW - 1;
         outH = outH % 2 === 0 ? outH : outH - 1;
 
         const duration = videoEl.duration;
         updateProgress(20, `Preparando canvas ${outW}×${outH}...`);
 
-        // Canvas onde cada frame será desenhado e redimensionado
         const canvas = document.createElement("canvas");
         canvas.width = outW;
         canvas.height = outH;
         const ctx = canvas.getContext("2d");
 
-        // Escolhe o melhor codec disponível no browser (com áudio Opus)
         const mimeType =
           [
             "video/webm;codecs=vp9,opus",
@@ -253,11 +215,9 @@
             "video/mp4",
           ].find((m) => MediaRecorder.isTypeSupported(m)) || "video/webm";
 
-        // Bitrate adaptativo: 1080p usa 4Mbps, menor resolução usa menos
         const pixels = outW * outH;
         const bitrate = Math.min(4_000_000, Math.max(800_000, pixels * 2));
 
-        // Captura de áudio via Web Audio API (o canvas sozinho só captura vídeo)
         const audioCtx = new (
           window.AudioContext || window.webkitAudioContext
         )();
@@ -307,12 +267,10 @@
           resolve(outFile);
         };
 
-        // Inicia gravação e reprodução
-        recorder.start(100); // Chunk a cada 100ms
+        recorder.start(100);
         videoEl.currentTime = 0;
         audioCtx.resume().then(() => videoEl.play());
 
-        // Loop: desenha cada frame no canvas enquanto o vídeo toca
         let lastTime = -1;
         function drawFrame() {
           if (videoEl.ended || videoEl.paused) {
@@ -320,12 +278,10 @@
             return;
           }
 
-          // Só redesenha se o frame mudou
           if (videoEl.currentTime !== lastTime) {
             ctx.drawImage(videoEl, 0, 0, outW, outH);
             lastTime = videoEl.currentTime;
 
-            // Atualiza progresso com base no tempo do vídeo
             if (duration > 0) {
               const pct = Math.round(
                 20 + (videoEl.currentTime / duration) * 75,
@@ -339,13 +295,12 @@
 
         videoEl.addEventListener("play", drawFrame, { once: true });
 
-        // Timeout de segurança: se demorar mais de 5 min, cancela e envia original
         setTimeout(() => {
           if (recorder.state === "recording") {
             recorder.stop();
           }
         }, 300_000);
-      }); // fim loadedmetadata
+      });
 
       videoEl.addEventListener("error", () => {
         console.warn("Erro ao ler vídeo, enviando sem compressão.");
@@ -354,10 +309,8 @@
         showProgressPanel(false);
         resolve(file);
       });
-    }); // fim Promise
+    });
   }
-
-  // ── UI da barra de progresso ──
 
   function showProgressPanel(show) {
     let panel = document.getElementById("videoProgressPanel");
@@ -370,11 +323,9 @@
           <div class="vp-bar" id="vpBar"></div>
         </div>
         <div class="vp-sublabel" id="vpSublabel"></div>`;
-      // Insere após o upload area
       const uploadArea = document.getElementById("videoUploadArea");
       uploadArea?.parentNode?.insertBefore(panel, uploadArea.nextSibling);
 
-      // Estilos inline (para não depender do CSS externo)
       const style = document.createElement("style");
       style.textContent = `
         #videoProgressPanel {
@@ -430,10 +381,6 @@
     if (el) el.textContent = sublabel;
   }
 
-  /**
-   * Faz upload do vídeo (já comprimido) para o Supabase Storage.
-   * Retorna a URL pública.
-   */
   async function uploadVideo(file, tempId) {
     const ext = file.name.split(".").pop() || "mp4";
     const path = `${tempId}.${ext}`;
@@ -457,9 +404,6 @@
     return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
   }
 
-  // ──────────────────────────────────────────────────────
-  // HELPERS
-  // ──────────────────────────────────────────────────────
 
   const getInitials = (name) =>
     name
@@ -495,9 +439,6 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
 
-  // ──────────────────────────────────────────────────────
-  // RENDERIZAÇÃO
-  // ──────────────────────────────────────────────────────
 
   function createCard(t, animate = false) {
     const card = document.createElement("div");
@@ -586,9 +527,6 @@
     }
   }
 
-  // ──────────────────────────────────────────────────────
-  // AÇÕES ADMIN
-  // ──────────────────────────────────────────────────────
 
   async function handleApprove(id, cardEl) {
     try {
@@ -626,9 +564,6 @@
     }
   }
 
-  // ──────────────────────────────────────────────────────
-  // MODAL DE VÍDEO
-  // ──────────────────────────────────────────────────────
 
   function openVideoModal(src) {
     if (!videoModalEl) return;
@@ -648,9 +583,6 @@
     document.body.style.overflow = "";
   }
 
-  // ──────────────────────────────────────────────────────
-  // FORMULÁRIO
-  // ──────────────────────────────────────────────────────
 
   function validateForm() {
     const name = document.getElementById("testiName")?.value.trim();
@@ -824,9 +756,6 @@
       setTimeout(() => document.getElementById("testiName")?.focus(), 400);
   }
 
-  // ──────────────────────────────────────────────────────
-  // MODO ADMIN
-  // ──────────────────────────────────────────────────────
 
   function enableAdminMode() {
     isAdminMode = true;
@@ -847,9 +776,6 @@
     showToastInternal("Modo admin desativado.");
   }
 
-  // ──────────────────────────────────────────────────────
-  // TOAST
-  // ──────────────────────────────────────────────────────
 
   function showToastInternal(msg) {
     if (typeof showToast === "function") {
@@ -864,9 +790,6 @@
     toast._t = setTimeout(() => toast.classList.remove("show"), 4000);
   }
 
-  // ──────────────────────────────────────────────────────
-  // INJEÇÃO DO HTML
-  // ──────────────────────────────────────────────────────
 
   function injectHTML() {
     const section = document.getElementById("depoimentos");
@@ -964,9 +887,6 @@
       </div>`;
   }
 
-  // ──────────────────────────────────────────────────────
-  // INICIALIZAÇÃO
-  // ──────────────────────────────────────────────────────
 
   async function init() {
     injectHTML();
@@ -1085,7 +1005,6 @@
       if (e.key === "Escape") closeVideoModal();
     });
 
-    // Atalho Ctrl + Shift + A
     document.addEventListener("keydown", (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === "A") {
         e.preventDefault();
@@ -1101,7 +1020,6 @@
       }
     });
 
-    // Reinicia IntersectionObserver para elementos injectados
     setTimeout(() => {
       const obs = new IntersectionObserver(
         (entries) =>
@@ -1123,7 +1041,6 @@
   }
 })();
 
-// Spinner CSS
 const s = document.createElement("style");
 s.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
 document.head.appendChild(s);

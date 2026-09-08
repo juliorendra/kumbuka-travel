@@ -1,13 +1,11 @@
 
 
-// ─── NAV: efeito scroll ───────────────────────
 const navbar = document.getElementById("navbar");
 
 window.addEventListener("scroll", () => {
   navbar.classList.toggle("scrolled", window.scrollY > 60);
 });
 
-// ─── MENU MOBILE ─────────────────────────────
 function toggleMenu() {
   const menu = document.getElementById("mobileMenu");
 
@@ -27,7 +25,6 @@ function closeMenu() {
 }
 
 
-// ─── REVEAL ON SCROLL ────────────────────────
 const reveals = document.querySelectorAll(".reveal");
 
 const revealObserver = new IntersectionObserver(
@@ -43,7 +40,6 @@ const revealObserver = new IntersectionObserver(
 
 reveals.forEach((el) => revealObserver.observe(el));
 
-// ─── FORMULÁRIO DE CONTATO ───────────────────
 function sendForm() {
   const nome = document.getElementById("nome").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -69,13 +65,12 @@ Mensagem:
 ${mensagem}`;
 
   const textoFormatado = encodeURIComponent(texto);
-  const numero = "5511983171592"; 
+  const numero = "5511983171592";
 
   const url = `https://wa.me/${numero}?text=${textoFormatado}`;
 
-  window.location.href = url; 
+  window.location.href = url;
 
-  // limpar campos
   document
     .querySelectorAll(
       ".contact-form input, .contact-form select, .contact-form textarea",
@@ -83,7 +78,6 @@ ${mensagem}`;
     .forEach((el) => (el.value = ""));
 }
 
-// ─── TOAST ───────────────────────────────────
 function showToast(msg) {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
@@ -91,12 +85,10 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove("show"), 4000);
 }
 
-// ─── IR PARA CONTATO (destinos) ──────────────
 function goContact() {
   document.getElementById("contato").scrollIntoView({ behavior: "smooth" });
 }
 
-// ─── NAV LINK ATIVO ──────────────────────────
 const allSections = document.querySelectorAll("section[id]");
 
 window.addEventListener("scroll", () => {

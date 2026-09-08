@@ -34,12 +34,10 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--deep); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
-/* ─── NAV ─── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -127,7 +125,6 @@ nav.scrolled {
   color: var(--deep) !important;
 }
 
-/* ─── HAMBURGER ─── */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -150,7 +147,6 @@ nav.scrolled {
   pointer-events: none;
 }
 
-/* ─── MENU MOBILE ─── */
 .mobile-menu {
   display: none;
   position: fixed;
@@ -200,7 +196,6 @@ nav.scrolled {
   color: var(--gold);
 }
 
-/* ─── HERO ─── */
 #hero {
   position: relative;
   height: 100vh;
@@ -386,7 +381,6 @@ nav.scrolled {
   50% { opacity: 0.4; transform: scaleY(0.7); }
 }
 
-/* ─── SECTIONS SHARED ─── */
 section { padding: 6rem 5%; }
 .section-label {
   display: inline-flex;
@@ -430,7 +424,6 @@ section { padding: 6rem 5%; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
-/* ─── SERVICES ─── */
 #servicos { background: var(--sand); }
 .services-grid {
   display: grid;
@@ -479,7 +472,6 @@ section { padding: 6rem 5%; }
 }
 .service-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.65; }
 
-/* ─── DESTINATIONS ─── */
 #destinos { background: var(--white); }
 .dest-header {
   display: flex;
@@ -553,7 +545,6 @@ section { padding: 6rem 5%; }
 }
 .dest-btn:hover { gap: 0.7rem; }
 
-/* ─── ABOUT ─── */
 #sobre { background: var(--deep); color: var(--white); position: relative; overflow: hidden; }
 #sobre::before {
   content: "";
@@ -610,7 +601,6 @@ section { padding: 6rem 5%; }
 .mvv-title { color: var(--gold-light); font-family: var(--ff-display); font-size: 0.95rem; margin-bottom: 0.4rem; font-weight: 600; }
 .mvv-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
 
-/* ─── TESTIMONIALS ─── */
 #depoimentos { background: var(--sand); }
 .testi-header { text-align: center; margin-bottom: 3.5rem; }
 .testi-header .section-label { justify-content: center; }
@@ -648,7 +638,6 @@ section { padding: 6rem 5%; }
 .testi-name { font-weight: 600; color: var(--deep); font-size: 0.92rem; }
 .testi-dest { font-size: 0.78rem; color: var(--gray); }
 
-/* ─── CTA BANNER ─── */
 #cta-banner {
   background: linear-gradient(135deg, var(--deep) 0%, var(--navy) 50%, #0e2a3d 100%);
   padding: 5rem 5%;
@@ -695,7 +684,6 @@ section { padding: 6rem 5%; }
 .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37,211,102,0.35); }
 .btn-whatsapp, .btn-primary { position: relative; z-index: 20; }
 
-/* ─── CONTACT ─── */
 #contato { background: var(--white); }
 .contact-grid {
   display: grid;
@@ -757,7 +745,6 @@ section { padding: 6rem 5%; }
 }
 .form-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(13,27,42,0.25); }
 
-/* ─── FOOTER ─── */
 footer { background: var(--deep); color: rgba(255,255,255,0.5); padding: 4rem 5% 2rem; }
 .footer-grid {
   display: grid;
@@ -796,7 +783,6 @@ footer { background: var(--deep); color: rgba(255,255,255,0.5); padding: 4rem 5%
 .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
 .footer-bottom a { color: var(--gold); text-decoration: none; }
 
-/* ─── WHATSAPP FLOAT ─── */
 .wa-float {
   position: fixed;
   bottom: 2rem;
@@ -818,7 +804,6 @@ footer { background: var(--deep); color: rgba(255,255,255,0.5); padding: 4rem 5%
   50% { box-shadow: 0 6px 30px rgba(37,211,102,0.7), 0 0 0 10px rgba(37,211,102,0.1); }
 }
 
-/* ─── TOAST ─── */
 .toast {
   position: fixed;
   bottom: 2rem;
@@ -838,7 +823,6 @@ footer { background: var(--deep); color: rgba(255,255,255,0.5); padding: 4rem 5%
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .dest-grid { grid-template-columns: 1fr 1fr; }
   .dest-card:first-child { grid-column: span 2; }
@@ -902,13 +886,11 @@ footer { background: var(--deep); color: rgba(255,255,255,0.5); padding: 4rem 5%
   .services-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ─── WHATSAPP — SUPORTE A CELULARES MODERNOS ─── */
 .wa-float {
   bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
   right: calc(1.5rem + env(safe-area-inset-right)) !important;
 }
 
-/* ─── FIX WHATSAPP COBERTO PELO MENU ─── */
 .wa-float {
   z-index: 99999 !important;
 }
