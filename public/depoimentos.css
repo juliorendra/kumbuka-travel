@@ -1,0 +1,799 @@
+
+
+/* ─── HEADER DA SEÇÃO ─── */
+#depoimentos {
+  background: var(--sand);
+}
+
+.testi-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.testi-header .section-label {
+  justify-content: center;
+}
+
+.testi-header .section-sub {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ─── BOTÃO ABRIR FORMULÁRIO ─── */
+.testi-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, var(--deep), var(--navy));
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 0.85rem 1.8rem;
+  font-family: var(--ff-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 2rem auto 0;
+  display: flex;
+  transition: transform 0.25s, box-shadow 0.25s;
+  letter-spacing: 0.03em;
+}
+
+.testi-add-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(13, 27, 42, 0.25);
+}
+
+.testi-add-btn svg {
+  transition: transform 0.3s;
+}
+
+.testi-add-btn.open svg {
+  transform: rotate(45deg);
+}
+
+/* ─── PAINEL DO FORMULÁRIO ─── */
+.testi-form-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease,
+    margin 0.4s ease;
+  opacity: 0;
+  margin-bottom: 0;
+}
+
+.testi-form-panel.open {
+  max-height: 900px;
+  opacity: 1;
+  margin-bottom: 3rem;
+}
+
+.testi-form-inner {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 10px 40px rgba(13, 27, 42, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linha decorativa dourada no topo */
+.testi-form-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--gold), var(--teal-light), var(--gold));
+}
+
+.testi-form-title {
+  font-family: var(--ff-display);
+  font-size: 1.3rem;
+  color: var(--deep);
+  margin-bottom: 0.3rem;
+}
+
+.testi-form-subtitle {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+
+/* ─── SELETOR DE ESTRELAS ─── */
+.star-selector-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--deep);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.star-selector {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+  flex-direction: row-reverse; /* Truque CSS para hover cascata */
+  justify-content: flex-end;
+}
+
+.star-selector input[type="radio"] {
+  display: none;
+}
+
+.star-selector label {
+  font-size: 2rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+  line-height: 1;
+}
+
+/* Efeito hover: ilumina estrela e todas as anteriores */
+.star-selector label:hover,
+.star-selector label:hover ~ label,
+.star-selector input[type="radio"]:checked ~ label {
+  color: var(--gold);
+}
+
+.star-selector label:hover {
+  transform: scale(1.15);
+}
+
+/* ─── CAMPOS DO FORMULÁRIO ─── */
+.testi-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.testi-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.testi-form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.testi-form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--deep);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.testi-form-group input,
+.testi-form-group textarea {
+  padding: 0.8rem 1rem;
+  border: 1.5px solid rgba(13, 27, 42, 0.1);
+  border-radius: 10px;
+  font-family: var(--ff-body);
+  font-size: 0.93rem;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: vertical;
+}
+
+.testi-form-group input:focus,
+.testi-form-group textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+}
+
+/* Campo com erro */
+.testi-form-group input.error,
+.testi-form-group textarea.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.field-error {
+  font-size: 0.75rem;
+  color: #e74c3c;
+  margin-top: 0.2rem;
+  display: none;
+}
+
+.field-error.show {
+  display: block;
+}
+
+/* Contador de caracteres */
+.char-counter {
+  font-size: 0.72rem;
+  color: var(--gray);
+  text-align: right;
+  margin-top: 0.2rem;
+  transition: color 0.3s;
+}
+
+.char-counter.warning {
+  color: #e67e22;
+}
+
+.char-counter.danger {
+  color: #e74c3c;
+}
+
+/* ─── UPLOAD DE VÍDEO ─── */
+.video-upload-area {
+  border: 2px dashed rgba(13, 27, 42, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  position: relative;
+  background: rgba(245, 237, 216, 0.3);
+}
+
+.video-upload-area:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.05);
+}
+
+.video-upload-area.has-file {
+  border-color: var(--teal);
+  background: rgba(27, 108, 168, 0.04);
+}
+
+.video-upload-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.video-upload-text {
+  font-size: 0.88rem;
+  color: var(--gray);
+  margin-bottom: 0.3rem;
+}
+
+.video-upload-hint {
+  font-size: 0.75rem;
+  color: rgba(138, 155, 176, 0.7);
+}
+
+.video-upload-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.video-file-info {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(27, 108, 168, 0.08);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin-top: 0.8rem;
+}
+
+.video-file-info.show {
+  display: flex;
+}
+
+.video-file-name {
+  font-size: 0.83rem;
+  color: var(--teal);
+  font-weight: 500;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-file-remove {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.video-file-remove:hover {
+  transform: scale(1.2);
+}
+
+/* ─── BOTÃO ENVIAR ─── */
+.testi-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--ff-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, opacity 0.2s;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.testi-submit-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201, 168, 76, 0.4);
+}
+
+.testi-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── AVISO DE MODERAÇÃO ─── */
+.moderation-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin-top: 1rem;
+}
+
+.moderation-notice-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.moderation-notice-text {
+  font-size: 0.8rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.moderation-notice-text strong {
+  color: var(--deep);
+}
+
+/* ─── GRID DE DEPOIMENTOS ─── */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ─── CARD DE DEPOIMENTO ─── */
+.testi-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.testi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(13, 27, 42, 0.1);
+}
+
+/* Card pendente de aprovação (somente admin vê) */
+.testi-card.pending {
+  opacity: 0.65;
+  border: 1.5px dashed rgba(201, 168, 76, 0.4);
+}
+
+.testi-card.pending::after {
+  content: "⏳ Aguardando aprovação";
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold-dark);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+}
+
+/* Animação de entrada do card */
+.testi-card.new-entry {
+  animation: cardEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.testi-quote {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.8rem;
+  font-family: var(--ff-display);
+  font-size: 4rem;
+  color: rgba(201, 168, 76, 0.2);
+  line-height: 1;
+}
+
+.testi-stars {
+  color: var(--gold);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.testi-text {
+  color: var(--text);
+  font-size: 0.93rem;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.testi-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--teal-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.testi-name {
+  font-weight: 600;
+  color: var(--deep);
+  font-size: 0.92rem;
+}
+
+.testi-dest {
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+/* Data do depoimento */
+.testi-date {
+  font-size: 0.72rem;
+  color: rgba(138, 155, 176, 0.6);
+  margin-top: 0.1rem;
+}
+
+/* ─── VÍDEO DENTRO DO CARD ─── */
+.testi-video-wrap {
+  margin-top: 1.2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--deep);
+  position: relative;
+}
+
+.testi-video-wrap video {
+  width: 100%;
+  display: block;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+/* ─── BADGE "NOVO" ─── */
+.testi-badge-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+/* ─── BOTÕES DE ADMIN ─── */
+.testi-admin-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13, 27, 42, 0.04);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Botão toggle admin (aparece somente quando admin está ativo) */
+.testi-admin-actions {
+  display: none; /* Oculto por padrão — aparece em modo admin */
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+body.admin-mode .testi-admin-actions {
+  display: flex;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  border: none;
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-btn:hover {
+  transform: translateY(-1px);
+}
+
+.admin-btn.approve {
+  background: rgba(39, 174, 96, 0.12);
+  color: #27ae60;
+  border: 1px solid rgba(39, 174, 96, 0.25);
+}
+
+.admin-btn.approve:hover {
+  background: rgba(39, 174, 96, 0.2);
+}
+
+.admin-btn.delete {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.admin-btn.delete:hover {
+  background: rgba(231, 76, 60, 0.18);
+}
+
+/* ─── PAINEL ADMIN (toggle no rodapé) ─── */
+.admin-panel {
+  background: rgba(13, 27, 42, 0.03);
+  border: 1px dashed rgba(13, 27, 42, 0.12);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+body.admin-mode .admin-panel {
+  display: flex;
+}
+
+.admin-panel-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--deep);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-panel-label::before {
+  content: "🔑";
+  font-size: 0.9rem;
+}
+
+.admin-badge-count {
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-exit-btn {
+  background: none;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-exit-btn:hover {
+  background: rgba(231, 76, 60, 0.08);
+}
+
+/* ─── ESTADO VAZIO ─── */
+.testi-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray);
+}
+
+.testi-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.testi-empty-text {
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+/* ─── SEPARADOR ─── */
+.testi-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+  color: var(--gray);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.testi-divider::before,
+.testi-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(13, 27, 42, 0.1);
+}
+
+/* ─── MODAL DE VÍDEO (fullscreen) ─── */
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.9);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(6px);
+}
+
+.video-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.video-modal-content {
+  width: min(90vw, 800px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--deep);
+  position: relative;
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.video-modal-overlay.open .video-modal-content {
+  transform: scale(1);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.video-modal-close:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.video-modal-content video {
+  width: 100%;
+  display: block;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .testi-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .testi-form-inner {
+    padding: 1.8rem 1.2rem;
+  }
+
+  .testi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-selector label {
+    font-size: 1.7rem;
+  }
+}
+
+
+/* ─── MOBILE FIX ─── */
+@media (max-width: 768px) {
+  .testi-form-inner {
+    padding: 1.5rem 1rem;
+  }
+
+  .testi-form-panel.open {
+    max-height: 1400px;
+  }
+
+  .testi-submit-btn {
+    margin-bottom: 1rem;
+  }
+
+  .moderation-notice {
+    margin-bottom: 1.5rem;
+  }
+}

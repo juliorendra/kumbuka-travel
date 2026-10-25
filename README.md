@@ -1,61 +1,13 @@
-﻿# ✈️ Kumbuka Travel
+# Kumbuka Travel 
 
-> Website institucional desenvolvido para a **Kumbuka Travel**, uma agência de viagens, com foco em experiência do usuário, apresentação de serviços e gerenciamento dinâmico de depoimentos.
+Site oficial da Kumbuka Travel, dedicado à apresentação de serviços de viagens, vistos e documentação.
 
-🌐 **Projeto em produção:**
-[https://kumbukatravel.netlify.app/](https://kumbukatravel.netlify.app/?utm_source=chatgpt.com)
+###  Tecnologias
+- React + vite
+- Supabase
 
-## 📌 Sobre o projeto
+###  Projeto online
+https://kumbukatravel.netlify.app/
 
-O **Kumbuka Travel** é um projeto desenvolvido **para um cliente real**, com o objetivo de criar uma presença digital moderna, profissional e responsiva para uma agência de viagens.
-
-A aplicação apresenta serviços, destinos, informações institucionais, canais de contato e um sistema dinâmico de depoimentos integrado ao **Supabase**.
-
-## 🚀 Tecnologias
-
-* **HTML5**
-* **CSS3**
-* **JavaScript**
-* **Supabase**
-
-## ✨ Funcionalidades
-
-* Interface responsiva
-* Navegação por seções
-* Apresentação de serviços e destinos
-* Formulário de contato
-* Sistema de avaliações por estrelas
-* Cadastro de depoimentos
-* Upload de vídeos
-* Compressão de vídeos no navegador
-* Integração com Supabase
-* Armazenamento de dados e arquivos
-* Sistema de aprovação e exclusão de depoimentos
-* Área administrativa
-
-## 🧠 Competências demonstradas
-
-* Desenvolvimento Front-End
-* JavaScript puro e manipulação do DOM
-* Design responsivo
-* Integração com APIs REST
-* Integração com banco de dados e Storage
-* Upload e processamento de arquivos
-* Validação e sanitização de dados
-* Desenvolvimento de interfaces interativas
-* Deploy e publicação de aplicação web
-
-## 🎯 Contexto profissional
-
-**Tipo:** Projeto para cliente real
-**Área:** Turismo e viagens
-**Status:** Publicado em produção
-
-O projeto foi desenvolvido considerando não apenas a implementação visual, mas também funcionalidades reais necessárias para o negócio, incluindo gerenciamento de depoimentos e armazenamento de vídeos.
-
-## 👨‍💻 Desenvolvedor
-
-**Júlio Rendra**
-Front-End Developer
-
-🌐 **Live Demo:** [Kumbuka Travel](https://kumbukatravel.netlify.app/?utm_source=chatgpt.com)
+###  Objetivo
+Facilitar o acesso aos serviços da Kumbuka Travel através de uma experiência digital moderna e intuitiva.
