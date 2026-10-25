@@ -200,7 +200,7 @@ function Header() {
       <a href="#hero" className="brand">
         <img src="/img/logo.png" alt="Kumbuka Travel" />
         <span className="new-cor">
-          Kumbuka  <b> Travel</b>
+          Kumbuka <b> Travel</b>
         </span>
       </a>
       <nav className="desktop-nav">
@@ -570,7 +570,8 @@ function Contact() {
                   <option>Reserva de hotel</option>
                   <option>Seguro viagem</option>
                   <option>Documentação</option>
-                  <option>Pacote completo</option>
+                  <option>Transfer</option>
+                  <option>Outros</option>
                 </select>
               </label>
               <label className="field-wide">
@@ -602,7 +603,7 @@ function Contact() {
               </p>
             )}
             <small className="privacy-note">
-              Os seus dados serão usados apenas para responder ao seu pedido.
+              Os seus dados serão usados apenas para responder ao seus pedidos.
             </small>
           </form>
         </div>
